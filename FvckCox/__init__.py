@@ -5,3 +5,4 @@ __license__ = 'MIT License'
 __copyright__ = 'Copyright 2018 Spencer Jones'
 
 from .ConnectionTester import ConnectionTester
+from .LogAnalyzer import LogAnalyzer
