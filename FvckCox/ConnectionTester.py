@@ -19,7 +19,7 @@ class ConnectionTester:
     def IsConnectionWorking(self, ip):
         #todo find a faster way to do this
         try:
-            urllib2.urlopen(ip, context = self.ctx)
+            urllib2.urlopen(ip, context = self.ctx, timeout=1)
             return True
         except:
             return False
@@ -50,7 +50,7 @@ class ConnectionTester:
                 
         out = {
             'timestamp' : '%s-%02d-%02d %02d:%02d' % (now.year, now.month, now.day, now.hour, now.minute),
-            'packetLoss' : packetLoss
+            'percentPacketLoss' : packetLoss
         }
         
         return out
@@ -58,7 +58,7 @@ class ConnectionTester:
     def LogResultsToFile(self, results):
         now = datetime.now()
         currentLogFolder = path.join(self.logFolder, str(now.year))
-        logFilePath = get_logfile_path(now.year, now.month)
+        logFilePath = get_logfile_path(self.logFolder, now.year, now.month)
         
         if not path.exists(currentLogFolder):
             makedirs(currentLogFolder)

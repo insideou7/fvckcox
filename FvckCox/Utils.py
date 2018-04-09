@@ -8,9 +8,10 @@ from datetime import datetime
 def format_to_printable(s):
     return filter(lambda x: x in string.printable, s)
 
-def get_logfile_path(year, month):
+def get_logfile_path(logRoot, year, month):
+    currentLogFolder = os.path.join(logRoot, str(year))
     logFileName = '%s_%02d.txt' % (year, month)
-    logFilePath = path.join(currentLogFolder, logFileName)
+    logFilePath = os.path.join(currentLogFolder, logFileName)
     
     return logFilePath
         
