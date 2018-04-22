@@ -31,8 +31,9 @@ class ConnectionTester:
         for i in xrange(numTries):
             if not self.IsConnectionWorking(ip):
                 packetsLost = packetsLost + 1
+        percentage = packetsLost / numTries
         
-        return packetsLost / numTries
+        return int(round(percentage))
         
     def TestAndLogConnection(self):
         if not self.IsConnectionWorking(self.inNetworkUrl):
