@@ -33,7 +33,7 @@ class ConnectionTester:
                 packetsLost = packetsLost + 1
         percentage = packetsLost / numTries
         
-        return int(round(percentage))
+        return percentage
         
     def TestAndLogConnection(self):
         if not self.IsConnectionWorking(self.inNetworkUrl):
@@ -48,6 +48,7 @@ class ConnectionTester:
     def FormatResults(self, packetLoss):
         now = datetime.now()
         packetLoss = packetLoss * 100
+        packetLoss = int(round(packetLoss))
                 
         out = {
             'timestamp' : '%s-%02d-%02d %02d:%02d' % (now.year, now.month, now.day, now.hour, now.minute),
