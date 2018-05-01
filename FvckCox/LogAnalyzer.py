@@ -5,6 +5,7 @@ import json
 from os import path,makedirs
 from datetime import datetime
 from calendar import monthrange
+from collections import Counter
 
 from Utils import read_file, get_logfile_path
 
@@ -35,10 +36,12 @@ class LogAnalyzer:
         lastMonth = self.AddMonths(datetime.now(), -1)
         numDrops = len(logs)
         datesOut = set()
+        hoursOut = Counter()
         
         for log in logs:
             _date = datetime.strptime(log['timestamp'], '%Y-%m-%d %H:%M')
             datesOut.add(_date.strftime("%Y-%m-%d"))
+            hoursOut.update(str(_date.hour))
             
         daysInLastMonth = monthrange(lastMonth.year, lastMonth.month)[1]
         numDaysOut = len(datesOut)
@@ -48,6 +51,8 @@ class LogAnalyzer:
         output += '=================================================\n'
         output += 'Days dropped: %2s/%s (%1.2f%%)\n' % (numDaysOut, daysInLastMonth, (numDaysOut * 100) / daysInLastMonth)
         output += '   Hours out: %5s (%1.2f%%)\n\n' % (numDrops, (numDrops * 100) / (daysInLastMonth * 24))
+        output += ' Worst Hours: %s\n' % hoursOut.most_common(5)
+        output += '  Best Hours: %s\n' % hoursOut.most_common()[:-5-1:-1]  
         
         return output
         
