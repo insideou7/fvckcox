@@ -41,7 +41,7 @@ class LogAnalyzer:
         for log in logs:
             _date = datetime.strptime(log['timestamp'], '%Y-%m-%d %H:%M')
             datesOut.add(_date.strftime("%Y-%m-%d"))
-            hoursOut.update(str(_date.hour))
+            hoursOut.update([str(_date.hour)])
             
         daysInLastMonth = monthrange(lastMonth.year, lastMonth.month)[1]
         numDaysOut = len(datesOut)
